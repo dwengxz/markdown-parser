@@ -7,6 +7,13 @@ import java.util.ArrayList;
 
 public class MarkdownParse {
 
+    public static boolean isRepeating(int current, int previous){
+        if(previous > current){
+            return true;
+        }
+        return false;
+    }
+
     public static ArrayList<String> getLinks(String markdown) {
         ArrayList<String> toReturn = new ArrayList<>();
         // find the next [, then find the ], then find the (, then read link upto next )
@@ -21,23 +28,36 @@ public class MarkdownParse {
  
             if(next == '['){
                 currentIndex = markdown.indexOf("]",closeBracket + 1) + 1;
+                if(previousIndex > currentIndex){
+                    break;
+                }
+                else{
+                    previousIndex=currentIndex;
+                }
             }
             if(next == '('){
                 int openParen = markdown.indexOf("(", closeBracket);
                 int closeParen = markdown.indexOf(")", openParen);
-                toReturn.add(markdown.substring(openParen + 1, closeParen));
                 currentIndex = closeParen + 1;
+                if(previousIndex > currentIndex){
+                    break;
+                }
+                else{
+                    previousIndex=currentIndex;
+                }
+                toReturn.add(markdown.substring(openParen + 1, closeParen));
             }
             else if(next == ':'){
                 int linkEnd = markdown.indexOf(' ',markdown.indexOf(next));
-                toReturn.add(markdown.substring(markdown.indexOf(next)+1,linkEnd));
                 currentIndex = linkEnd + 1;
+                if(previousIndex > currentIndex){
+                    break;
+                }
+                else{
+                    previousIndex=currentIndex;
+                }
+                toReturn.add(markdown.substring(markdown.indexOf(next)+1,linkEnd));
             }
-            
-            if(previousIndex > currentIndex){
-                break;
-            }
-            else{previousIndex = currentIndex;}
 
 
         }
