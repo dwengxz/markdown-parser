@@ -72,21 +72,21 @@ public class MarkdownParseTest {
     }
 
     @Test 
-    public void testSnippet2() {
+    public void testSnippet2() throws IOException{
         String contents = Files.readString(Path.of("snippet2.md"));
         List<String> expect = List.of("a.com", "a.com(())","example.com");
         assertEquals(MarkdownParse.getLinks(contents), expect);
     }
 
     @Test 
-    public void testSnippet3() {
+    public void testSnippet3() throws IOException{
         String contents = Files.readString(Path.of("snippet3.md"));
         List<String> expect = List.of("a.com", "a.com(())","example.com");
         assertEquals(MarkdownParse.getLinks(contents), expect);
     }
 
     @Test 
-    public void testSnippet3() {
+    public void testSnippet3() throws IOException{
         String contents = Files.readString(Path.of("snippet3.md"));
         List<String> expect = List.of("https://sites.google.com/eng.ucsd.edu/cse-15l-spring-2022/schedule");
         assertEquals(MarkdownParse.getLinks(contents), expect);
